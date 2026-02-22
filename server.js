@@ -59,6 +59,13 @@ async function saveDB() {
 app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '50mb' }));
 
+// ── Раздача фронтенда ────────────────────────────
+// Положите index.html и script.js рядом с server.js
+app.use(express.static(path.join(__dirname)));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 function auth(req, res, next) {
   const t = (req.headers.authorization || '').split(' ')[1];
   if (!t) return res.status(401).json({ error: 'No token' });
