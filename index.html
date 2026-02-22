@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KNB — социальная сеть</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;--card:#161923;--border:#252a38;--txt:#e8eaf0;--txt2:#6b7280;--blue:#4f8ef7;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--purple:#a855f7}
+.light{--bg:#f0f2f7;--bg2:#fff;--bg3:#e8ecf4;--card:#fff;--border:#d1d9e8;--txt:#0d1117;--txt2:#6b7280}
+body{background:var(--bg);color:var(--txt);font-family:'Manrope',sans-serif;min-height:100vh}
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 1.5rem;height:60px;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
+.logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:1.3rem;color:var(--blue);letter-spacing:-1px;white-space:nowrap}
+.logo span{color:var(--txt)}
+.sw{flex:1;max-width:360px;position:relative}
+.sw i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt2);font-size:.85rem}
+#si{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:24px;padding:.5rem 1rem .5rem 2.2rem;color:var(--txt);font-family:'Manrope',sans-serif;font-size:.9rem;outline:none}
+#si:focus{border-color:var(--blue)}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+.hbtn{background:none;border:none;color:var(--txt2);width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;position:relative;transition:.2s}
+.hbtn:hover{background:var(--bg3);color:var(--txt)}
+.hava{width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid var(--blue)}
+.bdg{position:absolute;top:4px;right:4px;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg2)}
+.mtog{display:none;background:none;border:none;color:var(--txt);font-size:1.2rem;cursor:pointer;padding:.4rem}
+.layout{display:flex;min-height:calc(100vh - 60px)}
+.lnav{width:240px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:1rem .75rem;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;display:flex;flex-direction:column;gap:.25rem}
+.ni{display:flex;align-items:center;gap:.85rem;padding:.75rem 1rem;border-radius:12px;cursor:pointer;color:var(--txt2);font-weight:600;font-size:.9rem;transition:.15s;border:none;background:none;width:100%;text-align:left}
+.ni:hover{background:var(--bg3);color:var(--txt)}
+.ni.active{background:var(--blue);color:#fff}
+.ni i{width:20px;font-size:1rem;flex-shrink:0}
+.nsep{height:1px;background:var(--border);margin:.5rem 0}
+.center{flex:1;max-width:700px;padding:1.5rem 1rem;min-width:0}
+.rp{width:290px;flex-shrink:0;padding:1.5rem 1rem;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;display:flex;flex-direction:column;gap:1.25rem}
+.rpb{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.25rem;overflow:hidden}
+.rpt{font-family:'Unbounded',sans-serif;font-size:.75rem;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;margin-bottom:1rem;transition:.2s}
+.pc:hover{border-color:var(--blue)}
+.ph{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;cursor:pointer}
+.ava{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--bg3);flex-shrink:0}
+.avsm{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--bg3);flex-shrink:0}
+.pan{font-weight:700;font-size:.95rem;display:flex;align-items:center;gap:.3rem}
+.pm{color:var(--txt2);font-size:.8rem;margin-top:.1rem}
+.vc{color:var(--blue);font-size:.85rem}
+.ptxt{line-height:1.6;word-break:break-word;margin-bottom:.75rem}
+.pimg{width:100%;border-radius:12px;max-height:400px;object-fit:cover;margin-bottom:.75rem;cursor:pointer}
+.pact{display:flex;gap:.5rem;border-top:1px solid var(--border);padding-top:.75rem;flex-wrap:wrap}
+.ab{background:none;border:none;color:var(--txt2);cursor:pointer;display:flex;align-items:center;gap:.4rem;font-size:.85rem;font-family:'Manrope',sans-serif;padding:.4rem .75rem;border-radius:20px;transition:.15s;font-weight:600}
+.ab:hover{background:var(--bg3)}
+.ab.liked{color:var(--red)}
+.ab.db:hover{background:rgba(239,68,68,.1);color:var(--red)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.25rem;border-radius:24px;border:none;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:700;font-size:.9rem;transition:.15s}
+.bp{background:var(--blue);color:#fff}.bp:hover{opacity:.85}
+.bs{background:var(--bg3);color:var(--txt);border:1px solid var(--border)}.bs:hover{border-color:var(--blue)}
+.bd{background:var(--red);color:#fff}
+.bg2c{background:var(--green);color:#fff}
+.bsm{padding:.35rem .9rem;font-size:.82rem}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.85rem;font-weight:600;color:var(--txt2);margin-bottom:.4rem}
+.fg input,.fg textarea{width:100%;padding:.7rem 1rem;background:var(--bg3);border:1px solid var(--border);border-radius:12px;color:var(--txt);font-family:'Manrope',sans-serif;font-size:.9rem;outline:none;transition:.2s;resize:vertical}
+.fg input:focus,.fg textarea:focus{border-color:var(--blue)}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center}
+.mo.open{display:flex}
+.mb{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:2rem;width:90%;max-width:480px;max-height:90vh;overflow-y:auto;position:relative}
+.mb h2{font-family:'Unbounded',sans-serif;font-size:1.1rem;margin-bottom:1.5rem}
+.mc{position:absolute;top:1rem;right:1rem;background:var(--bg3);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--txt2);display:flex;align-items:center;justify-content:center}
+.pban{height:180px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,var(--blue),var(--purple));background-size:cover;background-position:center}
+.paw{padding:0 1.5rem;margin-top:-44px;display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1rem}
+.pava{width:88px;height:88px;border-radius:50%;border:4px solid var(--bg2);object-fit:cover;background:var(--bg3)}
+.pinfo{padding:0 1.5rem 1.5rem}
+.pname{font-family:'Unbounded',sans-serif;font-size:1.1rem;font-weight:900;display:flex;align-items:center;gap:.4rem}
+.puname{color:var(--txt2);font-size:.85rem;margin-top:.2rem}
+.pbio{margin:.75rem 0;line-height:1.6}
+.cw{display:flex;flex-direction:column;height:calc(100vh - 150px);max-height:680px;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.chdr{padding:.85rem 1.25rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.cmsg{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
+.mw{display:flex;flex-direction:column}
+.mw.me{align-items:flex-end}
+.mw.them{align-items:flex-start}
+.msg{max-width:72%;padding:.65rem 1rem;border-radius:18px;font-size:.9rem;line-height:1.5;position:relative;word-break:break-word}
+.msg.them{background:var(--bg3);border-radius:18px 18px 18px 4px}
+.msg.me{background:var(--blue);color:#fff;border-radius:18px 18px 4px 18px}
+.mauth{font-size:.72rem;font-weight:700;margin-bottom:.25rem;color:var(--txt2)}
+.mtime{font-size:.68rem;opacity:.6;margin-top:.25rem}
+.mdel{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:.65rem;cursor:pointer;display:none;align-items:center;justify-content:center}
+.mw:hover .mdel{display:flex}
+.mimg{max-width:220px;border-radius:12px;cursor:pointer;display:block;margin-top:.35rem}
+.mvoice{display:flex;align-items:center;gap:.5rem;padding:.35rem;background:rgba(0,0,0,.12);border-radius:20px;margin-top:.35rem}
+.mvoice audio{height:28px;max-width:180px}
+.ciw{padding:.75rem 1rem;background:var(--bg2);border-top:1px solid var(--border);display:flex;gap:.5rem;align-items:center}
+.cim{flex:1;display:flex;align-items:center;gap:.4rem;background:var(--bg3);border:1px solid var(--border);border-radius:24px;padding:.4rem .75rem .4rem 1rem;transition:.2s}
+.cim:focus-within{border-color:var(--blue)}
+.cim input{flex:1;background:none;border:none;color:var(--txt);font-family:'Manrope',sans-serif;font-size:.9rem;outline:none}
+.cib{background:none;border:none;color:var(--txt2);cursor:pointer;padding:.25rem;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.15s;font-size:1rem;width:30px;height:30px}
+.cib:hover{color:var(--blue)}
+.cib.rec{color:var(--red)!important;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sbtn{background:var(--blue);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.sbtn:hover{opacity:.85}
+.atabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;border-bottom:2px solid var(--border);padding-bottom:.75rem}
+.at{background:none;border:none;padding:.5rem 1rem;border-radius:10px;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;font-size:.85rem;color:var(--txt2);transition:.15s}
+.at.active{background:var(--blue);color:#fff}
+.at:hover:not(.active){background:var(--bg3);color:var(--txt)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center}
+.sv{font-family:'Unbounded',sans-serif;font-size:1.6rem;font-weight:900;margin-bottom:.2rem}
+.sl{font-size:.72rem;color:var(--txt2)}
+.ur{display:flex;align-items:center;gap:.75rem;padding:.75rem;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:.5rem;flex-wrap:wrap}
+.uri{flex:1;min-width:0}
+.uri .un{font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
+.uri .us{color:var(--txt2);font-size:.78rem}
+.ura{display:flex;gap:.4rem;flex-wrap:wrap}
+.fr{display:flex;align-items:center;gap:.75rem;padding:.6rem .75rem;border-radius:12px;cursor:pointer;transition:.15s}
+.fr:hover{background:var(--bg3)}
+.cc{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:.75rem;cursor:pointer;transition:.2s}
+.cc:hover{border-color:var(--blue)}
+.cca{width:56px;height:56px;border-radius:14px;object-fit:cover;background:var(--bg3);flex-shrink:0}
+.ni2{padding:.9rem;border-bottom:1px solid var(--border);display:flex;gap:.75rem;align-items:flex-start}
+.ni2:last-child{border-bottom:none}
+.nd{width:8px;height:8px;background:var(--blue);border-radius:50%;margin-top:6px;flex-shrink:0}
+.nd.r{background:transparent;border:1px solid var(--border)}
+.wlc{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:1rem}
+.wlc h1{font-family:'Unbounded',sans-serif;font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.wlc p{color:var(--txt2);max-width:360px;line-height:1.6}
+.callscr{position:fixed;inset:0;background:#000;z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center}
+.callscr.active{display:flex}
+.callrem{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+.callloc{position:absolute;top:1rem;right:1rem;width:120px;height:90px;border-radius:12px;object-fit:cover;border:2px solid var(--blue);background:#111}
+.callui{position:relative;z-index:2;text-align:center;background:rgba(0,0,0,.4);padding:2rem 3rem;border-radius:24px;backdrop-filter:blur(10px)}
+.callname{font-family:'Unbounded',sans-serif;font-size:1.5rem;color:#fff;margin-bottom:.5rem}
+.callst{color:rgba(255,255,255,.7);margin-bottom:2rem}
+.callbtns{display:flex;gap:1.5rem;justify-content:center}
+.cb{width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:.15s}
+.cb:hover{transform:scale(1.1)}
+.cb.end{background:var(--red);color:#fff}
+.cb.ctrl{background:rgba(255,255,255,.2);color:#fff}
+.cb.muted{background:var(--red);color:#fff}
+.inc{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:1.25rem 1.5rem;z-index:900;display:none;flex-direction:column;gap:.75rem;min-width:280px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.inc.show{display:flex}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;display:none;align-items:center;justify-content:center}
+.lb.open{display:flex}
+.tag{display:inline-flex;align-items:center;gap:.3rem;padding:.15rem .6rem;border-radius:20px;font-size:.72rem;font-weight:700}
+.tb{background:rgba(79,142,247,.15);color:var(--blue)}
+.spin{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+@media(max-width:900px){.rp{display:none}}
+@media(max-width:640px){.lnav{position:fixed;top:60px;left:0;bottom:0;z-index:200;transform:translateX(-100%);transition:.25s}.lnav.open{transform:translateX(0)}.mtog{display:block}.center{padding:1rem .5rem}}
+</style>
+</head>
+<body>
+<header>
+  <button class="mtog" id="mtog"><i class="fas fa-bars"></i></button>
+  <div class="logo">KNB<span>.</span></div>
+  <div class="sw"><i class="fas fa-search"></i><input id="si" placeholder="Поиск..."></div>
+  <div class="hdr-r" id="hdr-r"></div>
+</header>
+<div class="layout">
+  <nav class="lnav" id="lnav">
+    <button class="ni active" data-p="feed"><i class="fas fa-home"></i> Главная</button>
+    <button class="ni" data-p="profile"><i class="fas fa-user"></i> Профиль</button>
+    <button class="ni" data-p="friends"><i class="fas fa-user-friends"></i> Друзья</button>
+    <button class="ni" data-p="messages"><i class="fas fa-envelope"></i> Сообщения</button>
+    <button class="ni" data-p="communities"><i class="fas fa-users"></i> Сообщества</button>
+    <button class="ni" data-p="notifications"><i class="fas fa-bell"></i> Уведомления</button>
+    <div class="nsep"></div>
+    <button class="ni" data-p="settings"><i class="fas fa-cog"></i> Настройки</button>
+    <button class="ni" data-p="admin" id="admbtn" style="display:none"><i class="fas fa-shield-alt"></i> Админ</button>
+  </nav>
+  <main class="center" id="cnt"></main>
+  <aside class="rp">
+    <div class="rpb"><div class="rpt">Люди</div><div id="rps"></div></div>
+    <div class="rpb"><div class="rpt">Уведомления</div><div id="rpn"></div></div>
+  </aside>
+</div>
+
+<!-- auth -->
+<div class="mo" id="m-auth">
+  <div class="mb">
+    <button class="mc" onclick="CM('m-auth')"><i class="fas fa-times"></i></button>
+    <div id="a-li">
+      <h2>Войти в KNB</h2>
+      <div class="fg"><label>Email или @username</label><input id="li-id" type="text" autocomplete="username"></div>
+      <div class="fg"><label>Пароль</label><input id="li-pw" type="password" autocomplete="current-password"></div>
+      <div id="li-e" style="color:var(--red);font-size:.85rem;margin-bottom:.75rem;display:none"></div>
+      <button class="btn bp" style="width:100%" id="li-b" onclick="doLogin()">Войти</button>
+      <p style="text-align:center;margin-top:1rem;color:var(--txt2);font-size:.85rem">Нет аккаунта? <a href="#" onclick="showReg()" style="color:var(--blue)">Регистрация</a></p>
+    </div>
+    <div id="a-rg" style="display:none">
+      <h2>Регистрация</h2>
+      <div class="fg"><label>Email</label><input id="rg-em" type="email"></div>
+      <div class="fg"><label>Имя</label><input id="rg-nm" type="text"></div>
+      <div class="fg"><label>@username</label><input id="rg-un" type="text" placeholder="@username"></div>
+      <div class="fg"><label>Пароль</label><input id="rg-pw" type="password"></div>
+      <div class="fg"><label>О себе</label><textarea id="rg-bi" rows="2"></textarea></div>
+      <div class="fg"><label>Аватар</label><input id="rg-av" type="file" accept="image/*"></div>
+      <div id="rg-e" style="color:var(--red);font-size:.85rem;margin-bottom:.75rem;display:none"></div>
+      <button class="btn bp" style="width:100%" id="rg-b" onclick="doReg()">Зарегистрироваться</button>
+      <p style="text-align:center;margin-top:1rem;color:var(--txt2);font-size:.85rem"><a href="#" onclick="showLi()" style="color:var(--blue)">Войти</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- post -->
+<div class="mo" id="m-post">
+  <div class="mb">
+    <button class="mc" onclick="CM('m-post')"><i class="fas fa-times"></i></button>
+    <h2>Создать пост</h2>
+    <div id="pt-cw" style="display:none;margin-bottom:1rem"><div style="font-size:.85rem;color:var(--txt2);font-weight:600">Сообщество</div><div id="pt-cn" style="font-weight:700;margin-top:.2rem"></div></div>
+    <div class="fg"><textarea id="pt-tx" rows="4" placeholder="Что у вас нового?"></textarea></div>
+    <div class="fg"><label><i class="fas fa-image"></i> Фото/Видео</label><input id="pt-mf" type="file" accept="image/*,video/*"></div>
+    <button class="btn bp" id="pt-b" onclick="publishPost()">Опубликовать</button>
+  </div>
+</div>
+
+<!-- comments -->
+<div class="mo" id="m-cmt">
+  <div class="mb">
+    <button class="mc" onclick="CM('m-cmt')"><i class="fas fa-times"></i></button>
+    <h2>Комментарии</h2>
+    <div id="cmt-l" style="max-height:300px;overflow-y:auto;margin-bottom:1rem"></div>
+    <div style="display:flex;gap:.5rem">
+      <input id="cmt-i" type="text" placeholder="Написать..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:24px;padding:.6rem 1rem;color:var(--txt);font-family:'Manrope',sans-serif;outline:none">
+      <button class="btn bp bsm" onclick="addCmt()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- community -->
+<div class="mo" id="m-cm">
+  <div class="mb">
+    <button class="mc" onclick="CM('m-cm')"><i class="fas fa-times"></i></button>
+    <h2>Создать сообщество</h2>
+    <div class="fg"><label>Название</label><input id="cm-nm" type="text"></div>
+    <div class="fg"><label>Описание</label><textarea id="cm-ds" rows="2"></textarea></div>
+    <div class="fg"><label>Аватар</label><input id="cm-av" type="file" accept="image/*"></div>
+    <button class="btn bp" id="cm-b" onclick="createComm()">Создать</button>
+  </div>
+</div>
+
+<!-- incoming call -->
+<div class="inc" id="inc">
+  <div style="display:flex;align-items:center;gap:.75rem">
+    <img id="ic-av" style="width:48px;height:48px;border-radius:50%;object-fit:cover" src="">
+    <div><div style="font-weight:700" id="ic-nm"></div><div style="color:var(--txt2);font-size:.85rem" id="ic-tp"></div></div>
+  </div>
+  <div style="display:flex;gap:.75rem">
+    <button class="cb" style="background:var(--green);color:#fff" onclick="acceptCall()"><i class="fas fa-phone"></i></button>
+    <button class="cb end" onclick="rejectCall()"><i class="fas fa-phone-slash"></i></button>
+  </div>
+</div>
+
+<!-- call screen -->
+<div class="callscr" id="callscr">
+  <video id="vrem" class="callrem" autoplay playsinline></video>
+  <video id="vloc" class="callloc" autoplay playsinline muted></video>
+  <div class="callui">
+    <div class="callname" id="cs-nm"></div>
+    <div class="callst" id="cs-st">Соединение...</div>
+    <div class="callbtns">
+      <button class="cb ctrl" id="b-mu" onclick="toggleMute()"><i class="fas fa-microphone"></i></button>
+      <button class="cb ctrl" id="b-cam" onclick="toggleCam()" style="display:none"><i class="fas fa-video"></i></button>
+      <button class="cb end" onclick="endCall()"><i class="fas fa-phone-slash"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- lightbox -->
+<div class="lb" id="lb" onclick="this.classList.remove('open')">
+  <img id="lb-img" src="" style="max-width:90vw;max-height:90vh;border-radius:12px">
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
